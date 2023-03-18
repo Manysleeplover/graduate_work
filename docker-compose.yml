@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+ 
+  postgresql:
+      image: postgres
+      environment:
+        - POSTGRES_DB=fgos
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+      volumes:
+        - ./init_scripts:/docker-entrypoint-initdb.d/
+        - /home/ioromanov/Диплом/graduate-work/db/fgos/postgres/data:/var/lib/postgresql/data
+      ports:
+        - 5432:5432
+        
+  pgadmin:
+      container_name: pgadmin_container
+      image: dpage/pgadmin4
+      environment:
+        PGADMIN_DEFAULT_EMAIL: manysleeplover@bk.ru
+        PGADMIN_DEFAULT_PASSWORD: postgres
+        PGADMIN_CONFIG_SERVER_MODE: 'False'
+      ports:
+        - "${PGADMIN_PORT:-5050}:80"
+        
+
+ 
+

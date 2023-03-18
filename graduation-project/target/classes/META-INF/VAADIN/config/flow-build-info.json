@@ -1,0 +1,11 @@
+{
+  "compatibilityMode": false,
+  "productionMode": false,
+  "npmFolder": "/home/ioromanov/Диплом/graduate-work/graduate-work",
+  "generatedFolder": "/home/ioromanov/Диплом/graduate-work/graduate-work/target/frontend",
+  "frontendFolder": "/home/ioromanov/Диплом/graduate-work/graduate-work/frontend",
+  "pnpm.enable": false,
+  "require.home.node": false,
+  "node.version": "v14.20.1",
+  "node.download.root": "https://nodejs.org/dist/"
+}
