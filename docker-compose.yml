@@ -9,7 +9,7 @@ services:
         - POSTGRES_PASSWORD=postgres
       volumes:
         - ./init_scripts:/docker-entrypoint-initdb.d/
-        - /home/ioromanov/Диплом/graduate-work/db/fgos/postgres/data:/var/lib/postgresql/data
+        - /home/ioromanov/Диплом/graduate_work/db/fgos/postgres/data:/var/lib/postgresql/data
       ports:
         - 5432:5432
         

@@ -23,8 +23,8 @@ public class Competence {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "competence_name")
-    private String competenceName;
+    @Column(name = "competence_list")
+    private String competenceList;
     @Column(name = "id_study_direction")
     private Long idStudyDirection;
 

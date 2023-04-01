@@ -10,7 +10,7 @@ create table if not exists STUDY_DIRECTION
 create table if not exists COMPETENCE
 (
     id bigserial, 
-    competence_name VARCHAR(16) NOT NULL,
+    competence_list text,
 	primary key (id),
 	id_study_direction bigint,
     foreign key (id_study_direction) references STUDY_DIRECTION(id)
