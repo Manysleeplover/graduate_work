@@ -19,16 +19,21 @@ public class StudyDirection {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "study_direction_code")
     private String studyDirectionCode;
-    @Column(name="study_directions_name")
+    @Column(name = "study_directions_name")
     private String studyDirectionName;
     @Column(name = "level_of_training")
     private String levelOfTraining;
 
 
-
     public StudyDirection() {
 
+    }
+
+    @Override
+    public String toString() {
+        return studyDirectionCode;
     }
 }

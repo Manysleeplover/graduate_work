@@ -10,7 +10,9 @@ import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.springframework.stereotype.Service;
+import ru.romanov.tests.entity.Competence;
 import ru.romanov.tests.entity.StudyDirection;
+import ru.romanov.tests.repository.CompetenceRepository;
 import ru.romanov.tests.repository.StudyDirectionRepository;
 
 import java.io.*;
@@ -27,12 +29,14 @@ public class FGOSUploadService {
     private final String PKCompetence = "ПК-";
 
     private final StudyDirectionRepository studyDirectionRepository;
+    private final CompetenceRepository competenceRepository;
 
-    public FGOSUploadService(StudyDirectionRepository studyDirectionRepository) {
+    public FGOSUploadService(StudyDirectionRepository studyDirectionRepository, CompetenceRepository competenceRepository) {
         this.studyDirectionRepository = studyDirectionRepository;
+        this.competenceRepository = competenceRepository;
     }
 
-    public String uploadFileByComponent(MemoryBuffer memoryBuffer) {
+    public List<Competence> uploadFileByComponent(MemoryBuffer memoryBuffer, StudyDirection studyDirection) {
 
         File file = new File("/home/ioromanov/Диплом/graduate_work/in" + memoryBuffer.getFileName());
         try {
@@ -79,8 +83,14 @@ public class FGOSUploadService {
         setMap.put(OPKCompetence, setOPK);
         setMap.put(PKCompetence, setPK);
 
+        Competence competence = new Competence();
+        competence.setCompetenceList(buildCompetenceJson(setMap));
+        competence.setIdStudyDirection(studyDirection.getId());
+        competence.setStudyDirection(studyDirection);
+        competenceRepository.save(competence);
 
-        return buildCompetenceJson(setMap);
+
+        return getCompetence();
     }
 
     @SneakyThrows
@@ -98,7 +108,10 @@ public class FGOSUploadService {
     }
 
     public List<StudyDirection> getAllStudyDirection(String levelOfTraining){
-
         return studyDirectionRepository.findStudyDirectionByLevelOfTraining(levelOfTraining);
+    }
+
+    public List<Competence> getCompetence(){
+        return competenceRepository.findAll();
     }
 }
