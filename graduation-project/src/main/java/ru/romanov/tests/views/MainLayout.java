@@ -38,10 +38,10 @@ public class MainLayout extends AppLayout {
     }
 
     private void createDrawer() {
-        RouterLink testLink = new RouterLink("Тесты", FGOSUploadView.class);
+        RouterLink uploadCompetence = new RouterLink("Загрузка компетенций", FGOSUploadView.class);
 
         addToDrawer(new VerticalLayout(
-                testLink
+                uploadCompetence
         ));
     }
 }

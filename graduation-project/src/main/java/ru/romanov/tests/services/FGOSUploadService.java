@@ -10,6 +10,8 @@ import org.apache.poi.xwpf.usermodel.IBodyElement;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFTable;
 import org.springframework.stereotype.Service;
+import ru.romanov.tests.entity.StudyDirection;
+import ru.romanov.tests.repository.StudyDirectionRepository;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -23,6 +25,12 @@ public class FGOSUploadService {
     private final String YKCompetence = "УК-";
     private final String OPKCompetence = "ОПК-";
     private final String PKCompetence = "ПК-";
+
+    private final StudyDirectionRepository studyDirectionRepository;
+
+    public FGOSUploadService(StudyDirectionRepository studyDirectionRepository) {
+        this.studyDirectionRepository = studyDirectionRepository;
+    }
 
     public String uploadFileByComponent(MemoryBuffer memoryBuffer) {
 
@@ -63,7 +71,7 @@ public class FGOSUploadService {
         Map<String, Set<String>> setMap = new HashMap<>();
 
         Set<String> setYK = list.stream().filter(item -> item.matches("^" + YKCompetence + ".*")).collect(Collectors.toCollection(LinkedHashSet::new));
-        Set<String> setOPK = list.stream().filter(item -> item.contains("^" + OPKCompetence + ".*")).collect(Collectors.toCollection(LinkedHashSet::new));
+        Set<String> setOPK = list.stream().filter(item -> item.matches("^" + OPKCompetence + ".*")).collect(Collectors.toCollection(LinkedHashSet::new));
         Set<String> setPK = list.stream().filter(item -> item.matches("^" + PKCompetence + ".*")).collect(Collectors.toCollection(LinkedHashSet::new));
 
 
@@ -87,5 +95,10 @@ public class FGOSUploadService {
             objectNode.set(item.getKey(), arrayNode);
         }
         return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectNode);
+    }
+
+    public List<StudyDirection> getAllStudyDirection(String levelOfTraining){
+
+        return studyDirectionRepository.findStudyDirectionByLevelOfTraining(levelOfTraining);
     }
 }

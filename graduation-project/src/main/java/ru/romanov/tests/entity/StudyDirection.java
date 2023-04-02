@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -22,8 +21,10 @@ public class StudyDirection {
     private Long id;
     @Column(name = "study_direction_code")
     private String studyDirectionCode;
-    @Column(name = "education_year")
-    private LocalDate idStudyDirection;
+    @Column(name="study_directions_name")
+    private String studyDirectionName;
+    @Column(name = "level_of_training")
+    private String levelOfTraining;
 
 
 

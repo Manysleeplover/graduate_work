@@ -29,6 +29,7 @@ public class Competence {
     private Long idStudyDirection;
 
 
+
     @OneToOne
     @NotFound(action = NotFoundAction.IGNORE)
     @JoinColumn(name = "id_study_direction", referencedColumnName = "id", insertable = false, updatable = false)
