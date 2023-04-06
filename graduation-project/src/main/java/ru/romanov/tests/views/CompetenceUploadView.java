@@ -1,4 +1,4 @@
-package ru.romanov.tests.views.test;
+package ru.romanov.tests.views;
 
 
 import com.vaadin.flow.component.button.Button;
@@ -14,7 +14,6 @@ import com.vaadin.flow.data.renderer.ComponentRenderer;
 import ru.romanov.tests.entity.Competence;
 import ru.romanov.tests.entity.StudyDirection;
 import ru.romanov.tests.services.CompetenceUploadService;
-import ru.romanov.tests.views.MainLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -23,7 +22,7 @@ import java.util.stream.Stream;
 
 @PageTitle("Загрузка списка компетенций")
 @Route(value = "/", layout = MainLayout.class)
-public class CompetenceUploadViewUploadView extends VerticalLayout {
+public class CompetenceUploadView extends VerticalLayout {
 
     /**
      * Сервис обработчик загрузки
@@ -46,7 +45,7 @@ public class CompetenceUploadViewUploadView extends VerticalLayout {
     private final Grid<Competence> competenceGrid = new Grid<>(Competence.class, false);
 
 
-    public CompetenceUploadViewUploadView(CompetenceUploadService competenceUploadService) {
+    public CompetenceUploadView(CompetenceUploadService competenceUploadService) {
         this.competenceUploadService = competenceUploadService;
         configureGrid();
         configureAllSelectors();
@@ -73,8 +72,10 @@ public class CompetenceUploadViewUploadView extends VerticalLayout {
     }
 
     private void configureAllSelectors() {
+        levelOfTrainSelector.setLabel("Выбрать уровень подготовки");
         levelOfTrainSelector.setItems(Stream.of("Бакалавриат", "Специалитет", "Магистратура", "Аспирантура"));
-        levelOfTrainSelector.setValue("Бакалвриат");
+
+        studyDirectionSelector.setLabel("Выбрать направление обучения");
         levelOfTrainSelector.addValueChangeListener(event -> {
             studyDirectionSelector.setItems(competenceUploadService.getAllStudyDirection(levelOfTrainSelector.getValue()));
         });
