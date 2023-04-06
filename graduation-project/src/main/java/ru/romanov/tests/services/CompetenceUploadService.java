@@ -3,6 +3,10 @@ package ru.romanov.tests.services;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.vaadin.flow.component.upload.receivers.MemoryBuffer;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
@@ -22,7 +26,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class FGOSUploadService {
+public class CompetenceUploadService {
 
     private final String YKCompetence = "УК-";
     private final String OPKCompetence = "ОПК-";
@@ -31,7 +35,7 @@ public class FGOSUploadService {
     private final StudyDirectionRepository studyDirectionRepository;
     private final CompetenceRepository competenceRepository;
 
-    public FGOSUploadService(StudyDirectionRepository studyDirectionRepository, CompetenceRepository competenceRepository) {
+    public CompetenceUploadService(StudyDirectionRepository studyDirectionRepository, CompetenceRepository competenceRepository) {
         this.studyDirectionRepository = studyDirectionRepository;
         this.competenceRepository = competenceRepository;
     }
@@ -104,7 +108,7 @@ public class FGOSUploadService {
             }
             objectNode.set(item.getKey(), arrayNode);
         }
-        return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(objectNode);
+        return toPrettyFormat(objectNode + "");
     }
 
     public List<StudyDirection> getAllStudyDirection(String levelOfTraining){
@@ -113,5 +117,16 @@ public class FGOSUploadService {
 
     public List<Competence> getCompetence(){
         return competenceRepository.findAll();
+    }
+
+    public static String toPrettyFormat(String jsonString)
+    {
+        JsonParser parser = new JsonParser();
+        JsonObject json = parser.parse(jsonString).getAsJsonObject();
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String prettyJson = gson.toJson(json);
+
+        return prettyJson;
     }
 }

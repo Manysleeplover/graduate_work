@@ -1,3 +1,14 @@
+ru/romanov/tests/entity/Discipline.class
+ru/romanov/tests/entity/Competence.class
+ru/romanov/tests/entity/StudyDirection.class
+ru/romanov/tests/repository/CompetenceRepository.class
+ru/romanov/tests/entity/StudyDirection$StudyDirectionBuilder.class
+ru/romanov/tests/entity/Discipline$DisciplineBuilder.class
+ru/romanov/tests/repository/StudyDirectionRepository.class
 ru/romanov/tests/views/test/FGOSUploadView.class
 ru/romanov/tests/Application.class
+ru/romanov/tests/repository/DisciplineRepository.class
+ru/romanov/tests/views/test/FGOSUploadView$PersonDetailsFormLayout.class
+ru/romanov/tests/services/FGOSUploadService.class
 ru/romanov/tests/views/MainLayout.class
+ru/romanov/tests/entity/Competence$CompetenceBuilder.class

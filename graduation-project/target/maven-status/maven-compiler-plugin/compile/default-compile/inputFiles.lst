@@ -1,4 +1,10 @@
-/home/ioromanov/Диплом/graduate-work/graduate-work/src/main/java/ru/romanov/tests/Application.java
-/home/ioromanov/Диплом/graduate-work/graduate-work/src/main/java/ru/romanov/tests/views/MainLayout.java
-/home/ioromanov/Диплом/graduate-work/graduate-work/src/main/java/ru/romanov/tests/services/FGOSUploadService.java
-/home/ioromanov/Диплом/graduate-work/graduate-work/src/main/java/ru/romanov/tests/views/test/FGOSUploadView.java
+/home/ioromanov/Диплом/graduate_work/graduation-project/src/main/java/ru/romanov/tests/services/FGOSUploadService.java
+/home/ioromanov/Диплом/graduate_work/graduation-project/src/main/java/ru/romanov/tests/repository/CompetenceRepository.java
+/home/ioromanov/Диплом/graduate_work/graduation-project/src/main/java/ru/romanov/tests/entity/Competence.java
+/home/ioromanov/Диплом/graduate_work/graduation-project/src/main/java/ru/romanov/tests/views/test/FGOSUploadView.java
+/home/ioromanov/Диплом/graduate_work/graduation-project/src/main/java/ru/romanov/tests/repository/DisciplineRepository.java
+/home/ioromanov/Диплом/graduate_work/graduation-project/src/main/java/ru/romanov/tests/repository/StudyDirectionRepository.java
+/home/ioromanov/Диплом/graduate_work/graduation-project/src/main/java/ru/romanov/tests/views/MainLayout.java
+/home/ioromanov/Диплом/graduate_work/graduation-project/src/main/java/ru/romanov/tests/entity/Discipline.java
+/home/ioromanov/Диплом/graduate_work/graduation-project/src/main/java/ru/romanov/tests/entity/StudyDirection.java
+/home/ioromanov/Диплом/graduate_work/graduation-project/src/main/java/ru/romanov/tests/Application.java

@@ -9,7 +9,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.theme.Theme;
-import ru.romanov.tests.views.test.FGOSUploadView;
+import ru.romanov.tests.views.test.CompetenceUploadViewUploadView;
 
 
 @Theme(themeFolder = "flowcrmtutorial")
@@ -38,7 +38,7 @@ public class MainLayout extends AppLayout {
     }
 
     private void createDrawer() {
-        RouterLink uploadCompetence = new RouterLink("Загрузка компетенций", FGOSUploadView.class);
+        RouterLink uploadCompetence = new RouterLink("Загрузка компетенций", CompetenceUploadViewUploadView.class);
 
         addToDrawer(new VerticalLayout(
                 uploadCompetence
