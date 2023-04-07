@@ -22,13 +22,15 @@ create table if not exists COMPETENCE
 create table if not exists Discipline
 (
     id bigserial, 
-    discipline_name VARCHAR(16) NOT NULL,
+    discipline_name VARCHAR(16) ,
     semestr_number VARCHAR(16) NOT NULL,
-    part_of_discipline VARCHAR(128) NOT NULL, -- Часть ( обязательная, формируемая и т.д.)
-    kind_of_discipline VARCHAR(128) NOT NULL, -- Тип (математика, программирование и т.д.)
-	id_competence bigint,
-	id_study_direction bigint,
-	primary key (id),
+    list_of_competence varchar(128),
+    block_name varchar(128),
+    part_name varchar(128),
+    type_of_dicsipline varchar(128),
+    id_competence bigint,
+    id_study_direction bigint,
+    primary key (id),
     foreign key (id_competence) references COMPETENCE(id),
     foreign key (id_study_direction) references STUDY_DIRECTION(id)
 );

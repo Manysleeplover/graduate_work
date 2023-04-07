@@ -9,7 +9,6 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -26,13 +25,22 @@ public class Discipline {
     @Column(name = "discipline_name")
     private String disciplineName;
 
-    @Column(name = "semester_number")
+    @Column(name = "semestr_number")
     private String semesterNumbers;
-    @Column(name = "part_of_discipline")
-    private LocalDate partOfDiscipline;
 
-    @Column(name = "kind_of_discipline")
-    private LocalDate kindOf;
+    @Column(name = "list_of_competence")
+    private String listOfCompetence;
+
+    @Column(name = "block_name")
+    private String blockName;
+
+    @Column(name = "part_name")
+    private String partName;
+
+    @Column(name = "type_of_dicsipline")
+    private String typeOfDiscipline;
+
+
 
     @OneToOne
     @NotFound(action = NotFoundAction.IGNORE)

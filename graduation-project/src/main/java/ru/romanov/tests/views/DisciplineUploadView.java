@@ -27,12 +27,12 @@ public class DisciplineUploadView extends VerticalLayout {
 
     private TextField listOfCompetence;
     private TextField blockName;
-    private TextField partNumber;
+    private TextField partName;
     private TextField typeOfDiscipline;
     private TextField disciplineName;
     private TextField numberOfSemesters;
 
-    private Button processButton = new Button();
+    private final Button processButton = new Button();
 
 
     public DisciplineUploadView(CompetenceUploadService competenceUploadService) {
@@ -64,7 +64,7 @@ public class DisciplineUploadView extends VerticalLayout {
 
         blockName = createTextField("Название блока", false,
                 null, "", null, null);
-        partNumber = createTextField("Название части", false,
+        partName = createTextField("Название части", false,
                 null, "", null, null);
         typeOfDiscipline = createTextField("Тип дисциплины", false,
                 null, "", null, null);
@@ -83,7 +83,7 @@ public class DisciplineUploadView extends VerticalLayout {
         divData1.getStyle().set("text-align", "left");
         Div divData2 = createDivForComponents(typeOfDiscipline, disciplineName, numberOfSemesters);
         divData2.getStyle().set("text-align", "left");
-        Div divData3 = createDivForComponents(listOfCompetence, blockName, partNumber);
+        Div divData3 = createDivForComponents(listOfCompetence, blockName, partName);
         divData3.getStyle().set("text-align", "left");
         Div divButton = createDivForComponents(processButton);
 
