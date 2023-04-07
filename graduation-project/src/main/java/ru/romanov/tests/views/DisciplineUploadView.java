@@ -9,8 +9,10 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import ru.romanov.tests.entity.Discipline;
 import ru.romanov.tests.entity.StudyDirection;
 import ru.romanov.tests.services.CompetenceUploadService;
+import ru.romanov.tests.services.DisciplineUploadService;
 
 import java.util.stream.Stream;
 
@@ -22,6 +24,7 @@ public class DisciplineUploadView extends VerticalLayout {
      * Сервис обработчик загрузки
      */
     private final CompetenceUploadService competenceUploadService;
+    private final DisciplineUploadService disciplineUploadService;
     private final Select<String> levelOfTraining = new Select<>();
     private final Select<StudyDirection> studyDirectionSelect = new Select<>();
 
@@ -35,8 +38,9 @@ public class DisciplineUploadView extends VerticalLayout {
     private final Button processButton = new Button();
 
 
-    public DisciplineUploadView(CompetenceUploadService competenceUploadService) {
+    public DisciplineUploadView(CompetenceUploadService competenceUploadService, DisciplineUploadService disciplineUploadService) {
         this.competenceUploadService = competenceUploadService;
+        this.disciplineUploadService = disciplineUploadService;
         configureProcessButton();
         configureAllSelectors();
         configureTextFields();
@@ -44,19 +48,21 @@ public class DisciplineUploadView extends VerticalLayout {
     }
 
 
-    private void configureAllSelectors() {
-        levelOfTraining.setLabel("Выбрать уровень подготовки");
-        levelOfTraining.setItems(Stream.of("Бакалавриат", "Специалитет", "Магистратура", "Аспирантура"));
-
-        studyDirectionSelect.setLabel("Выбрать направление обучения");
-        levelOfTraining.addValueChangeListener(event -> studyDirectionSelect.setItems(competenceUploadService.getAllStudyDirection(levelOfTraining.getValue())));
-
-        levelOfTraining.setWidth("20%");
-        levelOfTraining.getStyle().set("margin-right", "5%");
-
-        studyDirectionSelect.setWidth("20%");
-        studyDirectionSelect.getStyle().set("margin-right", "5%");
+    private void configureProcessButton() {
+        processButton.setText("Обработать");
+        processButton.addClickListener(event -> {
+            Discipline discipline = new Discipline();
+            discipline.setStudyDirection(studyDirectionSelect.getValue());
+            discipline.setListOfCompetence(listOfCompetence.getValue());
+            discipline.setDisciplineName(disciplineName.getValue());
+            discipline.setSemesterNumbers(numberOfSemesters.getValue());
+            discipline.setBlockName(blockName.getValue());
+            discipline.setPartName(partName.getValue());
+            discipline.setTypeOfDiscipline(typeOfDiscipline.getValue());
+            disciplineUploadService.uploadDiscipline(discipline);
+        });
     }
+
 
     private void configureTextFields() {
         listOfCompetence = createTextField("Список компетенций", false,
@@ -74,8 +80,18 @@ public class DisciplineUploadView extends VerticalLayout {
                 null, "", null, null);
     }
 
-    private void configureProcessButton(){
-        processButton.setText("Обработать");
+    private void configureAllSelectors() {
+        levelOfTraining.setLabel("Выбрать уровень подготовки");
+        levelOfTraining.setItems(Stream.of("Бакалавриат", "Специалитет", "Магистратура", "Аспирантура"));
+
+        studyDirectionSelect.setLabel("Выбрать направление обучения");
+        levelOfTraining.addValueChangeListener(event -> studyDirectionSelect.setItems(competenceUploadService.getAllStudyDirection(levelOfTraining.getValue())));
+
+        levelOfTraining.setWidth("20%");
+        levelOfTraining.getStyle().set("margin-right", "5%");
+
+        studyDirectionSelect.setWidth("20%");
+        studyDirectionSelect.getStyle().set("margin-right", "5%");
     }
 
     private Component[] createFiledsComponent() {
