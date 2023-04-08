@@ -39,6 +39,10 @@ public class Discipline {
 
     @Column(name = "type_of_dicsipline")
     private String typeOfDiscipline;
+    @Column(name = "id_study_direction")
+    private Long idStudyDirection;
+    @Column(name = "id_competence")
+    private Long idCompetence;
 
 
 

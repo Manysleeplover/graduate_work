@@ -22,8 +22,8 @@ create table if not exists COMPETENCE
 create table if not exists Discipline
 (
     id bigserial, 
-    discipline_name VARCHAR(16) ,
-    semestr_number VARCHAR(16) NOT NULL,
+    discipline_name VARCHAR(128) ,
+    semestr_number VARCHAR(128) NOT NULL,
     list_of_competence varchar(128),
     block_name varchar(128),
     part_name varchar(128),

@@ -2,11 +2,14 @@ package ru.romanov.tests.views;
 
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import ru.romanov.tests.entity.Discipline;
@@ -37,6 +40,8 @@ public class DisciplineUploadView extends VerticalLayout {
 
     private final Button processButton = new Button();
 
+    private Grid<Discipline> disciplineGrid = new Grid<>(Discipline.class, false);
+
 
     public DisciplineUploadView(CompetenceUploadService competenceUploadService, DisciplineUploadService disciplineUploadService) {
         this.competenceUploadService = competenceUploadService;
@@ -44,7 +49,22 @@ public class DisciplineUploadView extends VerticalLayout {
         configureProcessButton();
         configureAllSelectors();
         configureTextFields();
+        configureDisciplineGrid();
         add(createFiledsComponent());
+        disciplineGrid.setItems(disciplineUploadService.getAllDiscipline());
+        add(disciplineGrid);
+    }
+
+    private void configureDisciplineGrid(){
+        disciplineGrid.setItems(disciplineUploadService.getAllDiscipline());
+        disciplineGrid.addColumn(Discipline::getId).setHeader("Id");
+        disciplineGrid.addColumn(Discipline::getDisciplineName).setHeader("Название дисциплины");
+        disciplineGrid.addColumn(Discipline::getSemesterNumbers).setHeader("Номера семестров");
+        disciplineGrid.addColumn(Discipline::getListOfCompetence).setHeader("Список компетенций");
+        disciplineGrid.addColumn(Discipline::getBlockName).setHeader("Название блока");
+        disciplineGrid.addColumn(Discipline::getPartName).setHeader("Название части");
+        disciplineGrid.addColumn(Discipline::getTypeOfDiscipline).setHeader("Тип дисциплины");
+        disciplineGrid.setItemDetailsRenderer(createDisciplineDetailsRender());
     }
 
 
@@ -59,7 +79,8 @@ public class DisciplineUploadView extends VerticalLayout {
             discipline.setBlockName(blockName.getValue());
             discipline.setPartName(partName.getValue());
             discipline.setTypeOfDiscipline(typeOfDiscipline.getValue());
-            disciplineUploadService.uploadDiscipline(discipline);
+            discipline.setIdStudyDirection(studyDirectionSelect.getValue().getId());
+            disciplineGrid.setItems(disciplineUploadService.uploadDiscipline(discipline));
         });
     }
 
@@ -136,4 +157,56 @@ public class DisciplineUploadView extends VerticalLayout {
             binder.forField((HasValue<?, ?>) component).bind(propertyNameForValidator);
     }
 
+    private ComponentRenderer<DisciplineDetailsFormLayout, Discipline> createDisciplineDetailsRender() {
+        return new ComponentRenderer<>(
+                DisciplineDetailsFormLayout::new,
+                DisciplineDetailsFormLayout::setDiscipline);
+    }
+
+    private class DisciplineDetailsFormLayout extends FormLayout {
+        private final TextField studyDirections = new TextField("Направление подготовки");
+        private final TextField disciplineName = new TextField("Название дисциплины");
+        private final TextField semesterNumber = new TextField("Номера семестров");
+        private final TextField listOfCompetences = new TextField("Список компетенций");
+        private final TextField blockName = new TextField("Название Блока");
+        private final TextField partName = new TextField("Название части");
+        private final TextField typeOfDiscipline = new TextField("Тип дисциплины");
+        private final Button deleteButton = new Button("Удалить дисциплину");
+
+        public DisciplineDetailsFormLayout() {
+            Stream.of(studyDirections, disciplineName, semesterNumber,listOfCompetences,
+                    blockName, partName, typeOfDiscipline).forEach(item -> {
+                item.setReadOnly(true);
+                add(item);
+            });
+            studyDirections.setReadOnly(true);
+            add(deleteButton);
+
+
+            setResponsiveSteps(new ResponsiveStep("0", 2));
+            setColspan(studyDirections, 1);
+            setColspan(disciplineName, 1);
+            setColspan(semesterNumber, 1);
+            setColspan(listOfCompetences, 1);
+            setColspan(blockName, 1);
+            setColspan(partName, 1);
+            setColspan(typeOfDiscipline, 1);
+            setColspan(deleteButton, 1);
+        }
+
+
+        public void setDiscipline(Discipline discipline) {
+            studyDirections.setValue(discipline.getStudyDirection().getStudyDirectionCode());
+            disciplineName.setValue(discipline.getDisciplineName());
+            semesterNumber.setValue(discipline.getSemesterNumbers());
+            listOfCompetences.setValue(discipline.getListOfCompetence());
+            blockName.setValue(discipline.getBlockName());
+            partName.setValue(discipline.getPartName());
+            typeOfDiscipline.setValue(discipline.getTypeOfDiscipline());
+            deleteButton.addClickListener(event -> {
+                disciplineUploadService.deleteDiscipline(discipline);
+                disciplineGrid.setItems(disciplineUploadService.getAllDiscipline());
+            });
+        }
+    }
 }

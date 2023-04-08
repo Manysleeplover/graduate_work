@@ -12,4 +12,6 @@ public interface StudyDirectionRepository extends JpaRepository<StudyDirection, 
             " FROM public.study_direction " +
             " where level_of_training = :levelOfTraining ", nativeQuery = true)
     List<StudyDirection> findStudyDirectionByLevelOfTraining(@Param("levelOfTraining") String levelOfTraining);
+
+    List<StudyDirection> findStudyDirectionByStudyDirectionCode(String studyDirection);
 }
