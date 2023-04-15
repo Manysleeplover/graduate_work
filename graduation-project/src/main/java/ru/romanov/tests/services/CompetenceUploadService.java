@@ -78,9 +78,9 @@ public class CompetenceUploadService {
 
         Map<String, Set<String>> setMap = new HashMap<>();
 
-        Set<String> setYK = list.stream().filter(item -> item.matches("^" + YKCompetence + ".*")).collect(Collectors.toCollection(LinkedHashSet::new));
-        Set<String> setOPK = list.stream().filter(item -> item.matches("^" + OPKCompetence + ".*")).collect(Collectors.toCollection(LinkedHashSet::new));
-        Set<String> setPK = list.stream().filter(item -> item.matches("^" + PKCompetence + ".*")).collect(Collectors.toCollection(LinkedHashSet::new));
+        Set<String> setYK = list.stream().filter(item -> item.matches("^" + YKCompetence + "?\\d{1,2}?\\.[^\\d.]*")).collect(Collectors.toCollection(LinkedHashSet::new));
+        Set<String> setOPK = list.stream().filter(item -> item.matches("^" + OPKCompetence + "?\\d{1,2}?\\.[^\\d.]*")).collect(Collectors.toCollection(LinkedHashSet::new));
+        Set<String> setPK = list.stream().filter(item -> item.matches("^" + PKCompetence + "?\\d{1,2}?\\.[^\\d.]*")).collect(Collectors.toCollection(LinkedHashSet::new));
 
 
         setMap.put(YKCompetence, setYK);

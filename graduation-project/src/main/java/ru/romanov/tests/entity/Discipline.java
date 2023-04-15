@@ -44,7 +44,12 @@ public class Discipline {
     @Column(name = "id_competence")
     private Long idCompetence;
 
-
+    @Override
+    public String toString() {
+        return "Discipline{" +
+                "disciplineName='" + disciplineName + '\'' +
+                '}';
+    }
 
     @OneToOne
     @NotFound(action = NotFoundAction.IGNORE)

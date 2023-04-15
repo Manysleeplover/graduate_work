@@ -8,7 +8,6 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.renderer.ComponentRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -18,6 +17,9 @@ import ru.romanov.tests.services.CompetenceUploadService;
 import ru.romanov.tests.services.DisciplineUploadService;
 
 import java.util.stream.Stream;
+
+import static ru.romanov.tests.utils.ViewUtils.createDivForComponents;
+import static ru.romanov.tests.utils.ViewUtils.createTextField;
 
 @PageTitle("Назначение дисциплин")
 @Route(value = "/disciplines", layout = MainLayout.class)
@@ -55,7 +57,7 @@ public class DisciplineUploadView extends VerticalLayout {
         add(disciplineGrid);
     }
 
-    private void configureDisciplineGrid(){
+    private void configureDisciplineGrid() {
         disciplineGrid.setItems(disciplineUploadService.getAllDiscipline());
         disciplineGrid.addColumn(Discipline::getId).setHeader("Id");
         disciplineGrid.addColumn(Discipline::getDisciplineName).setHeader("Название дисциплины");
@@ -127,35 +129,6 @@ public class DisciplineUploadView extends VerticalLayout {
         return new Component[]{divData1, divData2, divData3, divButton};
     }
 
-    public static Div createDivForComponents(Component... components) {
-        Div div = new Div();
-        div.getStyle().set("text-align", "center");
-        div.setWidth("100%");
-        div.add(components);
-        return div;
-    }
-
-    public static <O> TextField createTextField(String label, boolean readOnly, String propertyNameForValidator,
-                                                String value, BeanValidationBinder<O> binder,
-                                                HasValue.ValueChangeListener<? super AbstractField.ComponentValueChangeEvent<TextField, String>> listener) {
-        TextField textField = new TextField(label);
-        textField.setReadOnly(readOnly);
-        setStandardStyleForComponent(textField, propertyNameForValidator, binder);
-        if (listener != null) {
-            textField.addValueChangeListener(listener);
-        }
-        if (value != null) textField.setValue(value);
-        return textField;
-    }
-
-    public static <O> void setStandardStyleForComponent(Component component, String propertyNameForValidator, BeanValidationBinder<O> binder) {
-        if (component instanceof HasSize)
-            ((HasSize) component).setWidth("20%");
-        if (component instanceof HasStyle)
-            ((HasStyle) component).getStyle().set("margin-right", "5%");
-        if (component instanceof HasValue && propertyNameForValidator != null && binder != null)
-            binder.forField((HasValue<?, ?>) component).bind(propertyNameForValidator);
-    }
 
     private ComponentRenderer<DisciplineDetailsFormLayout, Discipline> createDisciplineDetailsRender() {
         return new ComponentRenderer<>(
@@ -174,7 +147,7 @@ public class DisciplineUploadView extends VerticalLayout {
         private final Button deleteButton = new Button("Удалить дисциплину");
 
         public DisciplineDetailsFormLayout() {
-            Stream.of(studyDirections, disciplineName, semesterNumber,listOfCompetences,
+            Stream.of(studyDirections, disciplineName, semesterNumber, listOfCompetences,
                     blockName, partName, typeOfDiscipline).forEach(item -> {
                 item.setReadOnly(true);
                 add(item);

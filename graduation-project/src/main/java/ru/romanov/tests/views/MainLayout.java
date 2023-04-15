@@ -39,8 +39,9 @@ public class MainLayout extends AppLayout {
     private void createDrawer() {
         RouterLink uploadCompetence = new RouterLink("Загрузка компетенций", CompetenceUploadView.class);
         RouterLink uploadDiscipline = new RouterLink("Загрузка дисциплин", DisciplineUploadView.class);
+        RouterLink uploadMatrixOfCompetence = new RouterLink("Формирования матрицы компетенций", MatrixOfCompetenceView.class);
         addToDrawer(new VerticalLayout(
-                uploadCompetence, uploadDiscipline
+                uploadCompetence, uploadDiscipline, uploadMatrixOfCompetence
         ));
     }
 }
